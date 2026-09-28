@@ -37,7 +37,6 @@ class DFPS3BucketList {
 	}
 
 	make_filters() {
-		console.log('frappe.get_route()', frappe.get_route())
 		this.storage = this.page.add_field({
 			label: __('DFP External Storage'),
 			fieldname: 'storage',

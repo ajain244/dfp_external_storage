@@ -6,6 +6,8 @@ import frappe
 
 @frappe.whitelist()
 def get_info(storage=None, template=None, file_type=None) -> list[dict]:
+	# Lists every object in the bucket (private files and other sites included)
+	frappe.only_for("System Manager")
 	files = []
 
 	document = "DFP External Storage"
@@ -19,6 +21,7 @@ def get_info(storage=None, template=None, file_type=None) -> list[dict]:
 			dfp_external_storage_doc = frappe.get_doc(document, last_id[0].name if last_id else None)
 
 	if dfp_external_storage_doc:
+		dfp_external_storage_doc.check_permission("read")
 		# dfp_external_storage_doc.remote_files_list(template, file_type)
 		objects = dfp_external_storage_doc.remote_files_list()
 		for file in objects:

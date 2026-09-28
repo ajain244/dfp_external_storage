@@ -6,6 +6,7 @@ app_publisher = "DFP"
 app_description = "S3 compatible external storage for Frappe and ERPNext"
 app_email = "developmentforpeople@gmail.com"
 app_license = "MIT"
+required_apps = ["frappe"]
 
 # Includes in <head>
 # ------------------
@@ -120,8 +121,6 @@ page_renderer = [
 # DFP: More info about doc event hooks: https://frappeframework.com/docs/v13/user/en/basics/doctypes/controllers
 doc_events = {
 	"File": {
-		# TODO: Remove below line after 2025.01.01
-		# "on_update": "dfp_external_storage.dfp_external_storage.doctype.dfp_external_storage.dfp_external_storage.hook_file_on_update",
 		"before_save": "dfp_external_storage.dfp_external_storage.doctype.dfp_external_storage.dfp_external_storage.hook_file_before_save",
 		"after_delete": "dfp_external_storage.dfp_external_storage.doctype.dfp_external_storage.dfp_external_storage.hook_file_after_delete",
 	}

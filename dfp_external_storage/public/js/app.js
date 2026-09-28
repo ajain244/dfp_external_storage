@@ -17,6 +17,8 @@ frappe.views.FileView = class DFPExternalStorageFileView extends frappe.views.Fi
 	setup_defaults() {
 		this._dfp_external_storages = []
 		return super.setup_defaults().then(() => {
+			// Storage list is restricted to System Manager: avoid permission errors for other users
+			if (!frappe.model.can_read('DFP External Storage')) return
 			frappe.db.get_list('DFP External Storage', {fields: ['name', 'title']})
 			.then(data => this._dfp_external_storages = data)
 		})
@@ -55,7 +57,7 @@ frappe.views.FileView = class DFPExternalStorageFileView extends frappe.views.Fi
 frappe.ui.form.on('File', {
 
 	refresh: function (frm) {
-		let $title_area = frm.$wrapper[0].page.$title_area
+		let $title_area = frm.page.$title_area
 		$title_area.find(`.${class_external_storage_icon}`).remove()
 		if (frm.doc.dfp_external_storage_s3_key) {
 			$title_area.prepend(dfp_s3_icon())
